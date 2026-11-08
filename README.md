@@ -11,3 +11,7 @@ cp -r travel-planner ~/.claude/skills/
 ```
 
 Then ask Claude to plan a trip.
+
+## Website
+
+Live at https://travel-planner-skill.vercel.app

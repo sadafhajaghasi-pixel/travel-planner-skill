@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Travel Planner Skill</title>
+<meta name="description" content="A Claude skill that plans relaxed, nature-and-culture trips under $5,000.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌴</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbf8f3;
+    --surface: #ffffff;
+    --ink: #1f2a26;
+    --muted: #5d6b66;
+    --line: #e6e0d6;
+    --accent: #0f7a64;
+    --accent-soft: #e3f2ed;
+    --sun: #e08a2e;
+    --code-bg: #f1ece3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121815;
+      --surface: #1a221e;
+      --ink: #e8eee9;
+      --muted: #9fb0a8;
+      --line: #2b3631;
+      --accent: #4fc6a6;
+      --accent-soft: #1c2f29;
+      --sun: #f0a75a;
+      --code-bg: #222b27;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.6 Inter, system-ui, sans-serif;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 20px; }
+  header { padding: 72px 0 40px; }
+  .eyebrow {
+    display: inline-block; font-size: 13px; font-weight: 600; letter-spacing: .06em;
+    text-transform: uppercase; color: var(--accent); background: var(--accent-soft);
+    padding: 4px 10px; border-radius: 999px;
+  }
+  h1, h2 { font-family: Fraunces, Georgia, serif; font-weight: 650; line-height: 1.15; }
+  h1 { font-size: clamp(36px, 7vw, 56px); margin: 18px 0 14px; }
+  h2 { font-size: 26px; margin: 0 0 18px; }
+  h3 { font-size: 16px; margin: 0 0 6px; }
+  .lede { font-size: 19px; color: var(--muted); max-width: 640px; margin: 0 0 28px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn {
+    display: inline-block; padding: 11px 18px; border-radius: 10px; font-weight: 600;
+    text-decoration: none; border: 1px solid var(--accent); color: var(--accent);
+  }
+  .btn.primary { background: var(--accent); color: var(--bg); }
+  .btn:hover { filter: brightness(1.08); }
+  section { padding: 36px 0; border-top: 1px solid var(--line); }
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px;
+  }
+  .card p, .card ul { margin: 0; color: var(--muted); font-size: 15px; }
+  .card ul { padding-left: 18px; }
+  .icon { font-size: 22px; margin-bottom: 6px; display: block; }
+  ol.steps { list-style: none; padding: 0; margin: 0; counter-reset: s; display: grid; gap: 12px; }
+  ol.steps li {
+    counter-increment: s; position: relative; padding: 14px 18px 14px 58px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  }
+  ol.steps li::before {
+    content: counter(s); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px;
+    border-radius: 50%; background: var(--accent-soft); color: var(--accent);
+    font-weight: 600; display: grid; place-items: center; font-size: 14px;
+  }
+  ol.steps li span { color: var(--muted); }
+  .rules { display: flex; flex-wrap: wrap; gap: 10px; }
+  .pill {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+    padding: 8px 14px; font-size: 15px;
+  }
+  .pill b { color: var(--sun); }
+  pre {
+    background: var(--code-bg); border-radius: 10px; padding: 14px 16px; overflow-x: auto;
+    font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; margin: 0 0 12px;
+  }
+  .muted { color: var(--muted); }
+  footer { padding: 32px 0 56px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+  footer a, .muted a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Claude skill</span>
+    <h1>Travel Planner 🌴</h1>
+    <p class="lede">A Claude skill that plans trips my way: warm places with nature and culture, clean central hotels, a budget under $5,000, and days that never feel rushed.</p>
+    <div class="btns">
+      <a class="btn primary" href="/travel-planner/SKILL.md" download>Download SKILL.md</a>
+      <a class="btn" href="https://github.com/sadafhajaghasi-pixel/travel-planner-skill">View on GitHub</a>
+    </div>
+  </header>
+
+  <section>
+    <h2>How it plans</h2>
+    <ol class="steps">
+      <li><strong>Asks first.</strong> <span>Who's coming, where, when, where you're flying from, and anything special, then adapts for solo, family or friends.</span></li>
+      <li><strong>Applies the travel style.</strong> <span>Budget, flights, hotels and destinations below.</span></li>
+      <li><strong>Follows the pacing rules.</strong> <span>Keeps every day relaxed, with rest days after long transfers.</span></li>
+      <li><strong>Writes the plan.</strong> <span>Summary, flights, hotels, a day-by-day itinerary, a budget table and practical tips.</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>The travel style</h2>
+    <div class="grid">
+      <div class="card"><span class="icon">💵</span><h3>Budget</h3><p>Under $5,000 total, with a breakdown of every category plus a 10% buffer, and ideas to cut costs if a plan goes over.</p></div>
+      <div class="card"><span class="icon">✈️</span><h3>Flights</h3><p>Economy, with sensible layovers. Good extra-legroom deals get flagged with their price, but never booked by default.</p></div>
+      <div class="card"><span class="icon">🏨</span><h3>Hotels</h3><p>4-star and up, spotless, good value rather than luxury, and in safe central areas near sights and transport.</p></div>
+      <div class="card"><span class="icon">🌺</span><h3>Destinations</h3><p>Nature plus culture, preferably tropical. Checks the season and warns about rain, storms or extreme heat.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Pacing rules</h2>
+    <div class="rules">
+      <span class="pill"><b>≤ 2</b> cities per week</span>
+      <span class="pill"><b>≤ 6 h</b> walking per day</span>
+      <span class="pill">Late-ish starts &amp; a midday break</span>
+      <span class="pill">Rest day after arrival</span>
+      <span class="pill">Light travel days</span>
+      <span class="pill">Mix nature &amp; culture days</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Install it</h2>
+    <p class="muted">Copy the <code>travel-planner</code> folder into your Claude skills directory:</p>
+    <pre>git clone https://github.com/sadafhajaghasi-pixel/travel-planner-skill.git
+cp -r travel-planner-skill/travel-planner ~/.claude/skills/</pre>
+    <p class="muted">Then ask Claude something like “Plan me a 10-day trip in March.” Prices in a plan are estimates, so check them before you book.</p>
+  </section>
+
+  <footer>
+    Made by <a href="https://github.com/sadafhajaghasi-pixel">sadafhajaghasi-pixel</a>.
+  </footer>
+</div>
+</body>
+</html>
